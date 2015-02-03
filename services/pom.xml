@@ -30,7 +30,7 @@
   
   <artifactId>exo-clouddrive-sharepoint-services</artifactId>
   <packaging>jar</packaging>
-  <name>eXo Cloud Drive Extension :: Connectors :: SharePoint :: Services</name>
+  <name>eXo Cloud Drive :: Connectors :: SharePoint :: Services</name>
   <description>eXo Cloud Drive SharePoint connector extension configuration and services</description>
   
   <dependencies>

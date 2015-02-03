@@ -29,7 +29,7 @@
   
   <artifactId>exo-clouddrive-sharepoint-packaging</artifactId>
   <packaging>pom</packaging>
-  <name>eXo Cloud Drive Extension :: Connectors :: SharePoint :: Packaging</name>
+  <name>eXo Cloud Drive :: Connectors :: SharePoint :: Packaging</name>
   <description>eXo Cloud Drive SharePoint connector packaging</description>
 
   <dependencies>
