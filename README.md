@@ -18,7 +18,8 @@ SharePoint connector doesn't require any configuration for getting started. But 
 Predefined services a part of Cloud Drive add-on and they can be configured via connector plugin. This method good on development level, when need add predefined services to the packaged connector (e.g. when extending a connector).
 The CMIS connector, a base of SharePoint connector, additionally allows configure predefined AtomPub bindings via settings in eXo properties. Below both ways described with sample configuration.
 
-*Adding predefined services via connector plugin.* Create eXo container configuration file and add _CloudDriveService_ component plugin there as shown below. Place host name and port of your SharePoint server in an URL, give a name to your predefined connection. This name, in conjunction with user name, later will be used for folder naming when connecting in eXo.
+#### Adding predefined services via connector plugin ####
+Create eXo container configuration file and add _CloudDriveService_ component plugin there as shown below. Place host name and port of your SharePoint server in an URL, give a name to your predefined connection. This name, in conjunction with user name, later will be used for folder naming when connecting in eXo.
 
 ```xml
 <!-- SharePoint connector plugin -->
@@ -81,9 +82,10 @@ Save this file as *configuration.xml* in your eXo Platform configuration directo
 
 ```
 
-*Adding predefined services in eXo properties.* The same effect as via connector plugin, but much simpler, possible via setings in eXo properties file. On Platform 4.0 you'll need a new property to existing _configuration.properties_, on Platform 4.1 create (if not already done) your own _exo.properties_ and add described property to it.
+#### Adding predefined services in eXo properties ####
+The same effect as via connector plugin, but much simpler, possible via setings in eXo properties file. On Platform 4.0 you'll need a new property to existing _configuration.properties_, on Platform 4.1 create (if not already done) your own _exo.properties_ and add described property to it.
 
-```
+```ini
 clouddrive.sharepoint.predefined=Marketing:http://marketing.acme.com:8000/_vti_bin/cmis/rest?getRepositories\n\
 Sales:http://sales.acme.com:8000/_vti_bin/cmis/rest?getRepositories\n\
 BCG - US:https://circle.bcghq.com/_vti_bin/cmis/rest?getRepositories
@@ -94,7 +96,7 @@ Predefined service consists of a string started with a name of service and its U
 
 Additionally, via eXo properties, it's possible to avoid using predefined services from connector plugin configuration. Set _override_ flag as below to reset predefined SharePoint connector servers. 
 
-```
+```ini
 clouddrive.sharepoint.predefined.override=false
 ```
 Note that settings keys (on the left) are case-sensitive and must be in lower case. For more details about predefined services configuration refer to Cloud Drive documentation.
