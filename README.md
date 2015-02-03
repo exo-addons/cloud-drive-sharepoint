@@ -18,7 +18,7 @@ SharePoint connector doesn't require any configuration for getting started. But 
 Predefined services a part of Cloud Drive add-on and they can be configured via connector plugin. This method good on development level, when need add predefined services to the packaged connector (e.g. when extending a connector).
 The CMIS connector, a base of SharePoint connector, additionally allows configure predefined AtomPub bindings via settings in eXo properties. Below both ways described with sample configuration.
 
-Adding predefined services via connector plugin: create eXo container configuration file and add _CloudDriveService_ component plugin there as shown below. Place host name and port of your SharePoint server in an URL, give a name to your predefined connection. This name, in conjunction with user name, later will be used for folder naming when connecting in eXo.
+*Adding predefined services via connector plugin.* Create eXo container configuration file and add _CloudDriveService_ component plugin there as shown below. Place host name and port of your SharePoint server in an URL, give a name to your predefined connection. This name, in conjunction with user name, later will be used for folder naming when connecting in eXo.
 
 ```xml
 <!-- SharePoint connector plugin -->
@@ -81,7 +81,7 @@ Save this file as *configuration.xml* in your eXo Platform configuration directo
 
 ```
 
-Add predefined services in eXo properties. The same effect as via connector plugin, but much simpler, possible via setings in eXo properties file. On Platform 4.0 you'll need a new property to existing _configuration.properties_, on Platform 4.1 create (if not already done) your own _exo.properties_ and add described property to it.
+*Adding predefined services in eXo properties.* The same effect as via connector plugin, but much simpler, possible via setings in eXo properties file. On Platform 4.0 you'll need a new property to existing _configuration.properties_, on Platform 4.1 create (if not already done) your own _exo.properties_ and add described property to it.
 
 ```
 clouddrive.sharepoint.predefined=Marketing:http://marketing.acme.com:8000/_vti_bin/cmis/rest?getRepositories\n\
