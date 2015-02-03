@@ -48,7 +48,7 @@
   </dependencies>
 
   <build>
-    <finalName>exo-cloud-drive</finalName>
+    <finalName>exo-cloud-drive-sharepoint</finalName>
     <resources>
       <resource>
         <directory>src/main/resources</directory>
