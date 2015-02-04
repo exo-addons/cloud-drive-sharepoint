@@ -13,7 +13,7 @@ Before installing this connector to your eXo Platform server, install eXo Cloud 
 Configuration
 -------------
 
-SharePoint connector doesn't require any configuration for getting started. But you may find useful to pre-configure your SharePoint servers for better user experience.
+SharePoint connector doesn't require any configuration for getting started. But you may find useful to predefine your SharePoint servers for better user experience.
 
 Predefined services a part of Cloud Drive add-on and they can be configured via connector plugin. This method good on development level, when need add predefined services to the packaged connector (e.g. when extending a connector).
 The CMIS connector, a base of SharePoint connector, additionally allows configure predefined AtomPub bindings via settings in eXo properties. Below both ways described with sample configuration.
