@@ -42,14 +42,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <properties>
     <!-- Defaut compiler settings -->
     <maven.compiler.optimize>true</maven.compiler.optimize>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
 
     <!-- eXo Modules -->
     <org.exoplatform.platform.version>4.0.7</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
-    <org.exoplatform.exo-clouddrive.version>1.1.0-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
+    <org.exoplatform.exo-clouddrive.version>1.2.0-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
     <org.exoplatform.jcr-services.version>1.15.10-GA</org.exoplatform.jcr-services.version>

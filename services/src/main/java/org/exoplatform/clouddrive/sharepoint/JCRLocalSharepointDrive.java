@@ -108,11 +108,8 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
     return (SharepointUser) user;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  protected void readNodes(Node parent, Map<String, List<Node>> nodes, boolean deep) throws RepositoryException {
+  @Deprecated 
+  protected void readNodes_Old(Node parent, Map<String, List<Node>> nodes, boolean deep) throws RepositoryException {
     // gather original mappings
     super.readNodes(parent, nodes, deep);
 
