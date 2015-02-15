@@ -33,6 +33,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.AuthCache;
@@ -53,11 +54,8 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.exoplatform.clouddrive.CloudDriveAccessException;
 import org.exoplatform.clouddrive.CloudDriveException;
-import org.exoplatform.clouddrive.NotFoundException;
-import org.exoplatform.clouddrive.RefreshAccessException;
 import org.exoplatform.clouddrive.cmis.CMISAPI;
 import org.exoplatform.clouddrive.cmis.CMISException;
-import org.exoplatform.clouddrive.cmis.CMISInvalidArgumentException;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.ws.frameworks.json.JsonParser;
@@ -89,27 +87,29 @@ import javax.ws.rs.core.MediaType;
  */
 public class SharepointAPI extends CMISAPI {
 
-  protected static final Log    LOG                = ExoLogger.getLogger(SharepointAPI.class);
+  protected static final Log    LOG                     = ExoLogger.getLogger(SharepointAPI.class);
 
-  protected static final String DOCUMENT_ID_SUFFIX = "-512";
+  protected static final String MAJOR_VERSION_ID_SUFFIX = "-512";
 
-  protected static final String REST_CONTEXTINFO   = "%s/_api/contextinfo";
+  protected static final String REST_CONTEXTINFO        = "%s/_api/contextinfo";
 
-  protected static final String REST_CURRENTUSER   = "%s/_api/Web/CurrentUser";
+  protected static final String REST_CURRENTUSER        = "%s/_api/Web/CurrentUser";
 
-  protected static final String REST_SITETITLE     = "%s/_api/Web/Title";
+  protected static final String REST_SITETITLE          = "%s/_api/Web/Title";
 
   protected class ChangesIterator extends org.exoplatform.clouddrive.cmis.CMISAPI.ChangesIterator {
 
-    ChangesIterator(ChangeToken startChangeToken) throws CMISException, RefreshAccessException {
+    ChangesIterator(ChangeToken startChangeToken) throws CMISException, CloudDriveAccessException {
       super(startChangeToken);
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws CloudDriveAccessException
      */
     @Override
-    protected Iterator<ChangeEvent> nextChunk() throws CMISException, RefreshAccessException {
+    protected Iterator<ChangeEvent> nextChunk() throws CMISException, CloudDriveAccessException {
       final ChangeToken startChangeToken = changeToken; // if it's firstRun then it is start token
 
       Iterator<ChangeEvent> nextChunk = super.nextChunk();
@@ -434,23 +434,9 @@ public class SharepointAPI extends CMISAPI {
    * {@inheritDoc}
    */
   @Override
-  protected ChangesIterator getChanges(ChangeToken changeToken) throws CMISException, RefreshAccessException {
+  protected ChangesIterator getChanges(ChangeToken changeToken) throws CMISException,
+                                                               CloudDriveAccessException {
     return new ChangesIterator(changeToken);
-  }
-
-  protected CmisObject getObject(String id) throws CMISException,
-                                           NotFoundException,
-                                           CloudDriveAccessException {
-    try {
-      return super.getObject(id);
-    } catch (CMISInvalidArgumentException e) {
-      // try get object as a document (file) by id with suffix -512
-      try {
-        return super.getObject(documentId(id));
-      } catch (CMISInvalidArgumentException de) {
-        throw e; // throw original exception
-      }
-    }
   }
 
   /**
@@ -532,16 +518,29 @@ public class SharepointAPI extends CMISAPI {
     try {
       HttpResponse resp = nativeClient.get(reqURI, "Web Site title");
       JsonValue json = readJson(resp);
-      JsonValue dv = json.getElement("d");
-      if (dv != null && !dv.isNull()) {
-        JsonValue tv = dv.getElement("Title");
-        if (tv != null) {
-          return tv.isNull() ? tv.toString() : tv.getStringValue();
+      StatusLine status = resp.getStatusLine();
+      if (status != null) {
+        if (status.getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
+          String message = status.getReasonPhrase();
+          if (message == null || message.length() == 0) {
+            message = resp.getEntity().toString();
+          }
+          message += ". " + readError(json);
+          throw new CloudDriveAccessException("Unauthorized for reading site title. " + message);
+        }
+        JsonValue dv = json.getElement("d");
+        if (dv != null && !dv.isNull()) {// TODO dv null and resp is 401 - run proper ex
+          JsonValue tv = dv.getElement("Title");
+          if (tv != null) {
+            return tv.isNull() ? tv.toString() : tv.getStringValue();
+          } else {
+            throw new SharepointException("Title request doesn't return a title value");
+          }
         } else {
-          throw new SharepointException("Title request doesn't return a title value");
+          throw new SharepointException("Title request doesn't return an expected body (d)");
         }
       } else {
-        throw new SharepointException("Title request doesn't return an expected body (d)");
+        throw new SharepointException("Cannot read site title: response without status");
       }
     } catch (ClientProtocolException e) {
       throw new SharepointException("Protocol error reading site title", e);
@@ -560,47 +559,63 @@ public class SharepointAPI extends CMISAPI {
    * @return
    * @throws SharepointException
    * @throws SharepointServiceNotFound
+   * @throws CloudDriveAccessException
    */
-  protected User readSiteUser() throws SharepointException, SharepointServiceNotFound {
+  protected User readSiteUser() throws SharepointException,
+                               SharepointServiceNotFound,
+                               CloudDriveAccessException {
     String reqURI = String.format(REST_CURRENTUSER, siteURL);
     try {
       HttpResponse resp = nativeClient.get(reqURI, "Web Site current user");
-      JsonValue json = readJson(resp);
-      JsonValue dv = json.getElement("d");
-      if (dv != null && !dv.isNull()) {
-        String id, loginName, title, email;
-        boolean isAdmin;
-
-        JsonValue v = dv.getElement("Id");
-        if (v != null && !v.isNull()) {
-          id = v.getStringValue();
-        } else {
-          throw new SharepointException("Current user request doesn't return Id");
+      StatusLine status = resp.getStatusLine();
+      if (status != null) {
+        JsonValue json = readJson(resp);
+        if (status.getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
+          String message = status.getReasonPhrase();
+          if (message == null || message.length() == 0) {
+            message = resp.getEntity().toString();
+          }
+          message += ". " + readError(json);
+          throw new CloudDriveAccessException("Unauthorized for reading current user: " + message);
         }
+        JsonValue dv = json.getElement("d");
+        if (dv != null && !dv.isNull()) {
+          String id, loginName, title, email;
+          boolean isAdmin;
 
-        v = dv.getElement("LoginName");
-        if (v != null && !v.isNull()) {
-          loginName = v.getStringValue();
+          JsonValue v = dv.getElement("Id");
+          if (v != null && !v.isNull()) {
+            id = v.getStringValue();
+          } else {
+            throw new SharepointException("Current user request doesn't return Id");
+          }
+
+          v = dv.getElement("LoginName");
+          if (v != null && !v.isNull()) {
+            loginName = v.getStringValue();
+          } else {
+            throw new SharepointException("Current user request doesn't return LoginName");
+          }
+
+          v = dv.getElement("Title");
+          if (v != null && !v.isNull()) {
+            title = v.getStringValue();
+          } else {
+            throw new SharepointException("Current user request doesn't return Title");
+          }
+
+          v = dv.getElement("Email");
+          email = v == null || v.isNull() ? "" : v.getStringValue();
+
+          v = dv.getElement("IsSiteAdmin");
+          isAdmin = v == null || v.isNull() ? false : v.getBooleanValue();
+
+          return new User(id, loginName, title, email, isAdmin);
         } else {
-          throw new SharepointException("Current user request doesn't return LoginName");
+          throw new SharepointException("Current user request doesn't return an expected body (d)");
         }
-
-        v = dv.getElement("Title");
-        if (v != null && !v.isNull()) {
-          title = v.getStringValue();
-        } else {
-          throw new SharepointException("Current user request doesn't return Title");
-        }
-
-        v = dv.getElement("Email");
-        email = v == null || v.isNull() ? "" : v.getStringValue();
-
-        v = dv.getElement("IsSiteAdmin");
-        isAdmin = v == null || v.isNull() ? false : v.getBooleanValue();
-
-        return new User(id, loginName, title, email, isAdmin);
       } else {
-        throw new SharepointException("Current user request doesn't return an expected body (d)");
+        throw new SharepointException("Cannot read current user: response without status");
       }
     } catch (ClientProtocolException e) {
       throw new SharepointException("Protocol error reading curent user", e);
@@ -619,7 +634,6 @@ public class SharepointAPI extends CMISAPI {
                                                  SharepointException {
     HttpEntity entity = resp.getEntity();
     Header contentType = entity.getContentType();
-    StringBuilder text = new StringBuilder();
     if (contentType != null && contentType.getValue() != null
         && contentType.getValue().startsWith(MediaType.APPLICATION_JSON)) {
       InputStream content = entity.getContent();
@@ -660,6 +674,21 @@ public class SharepointAPI extends CMISAPI {
       }
     }
     return text.toString();
+  }
+
+  protected String readError(JsonValue json) {
+    JsonValue error = json.getElement("error");
+    if (error != null) {
+      JsonValue errorMsg = error.getElement("message");
+      if (errorMsg != null) {
+        JsonValue emv = errorMsg.getElement("value");
+        if (errorMsg != null) {
+          return emv.getStringValue();
+        }
+      }
+      return error.getStringValue();
+    }
+    return "".intern();
   }
 
   /**
@@ -724,7 +753,7 @@ public class SharepointAPI extends CMISAPI {
     data.setAllowableActions(obj.getAllowableActions());
 
     // new object instance
-    CmisObject newObj = factory.convertObject(data, objectContext);
+    CmisObject newObj = factory.convertObject(data, fileContext);
 
     // and use super's logic with it
     CmisObject renamed = super.rename(newName, newObj, session);
@@ -741,20 +770,28 @@ public class SharepointAPI extends CMISAPI {
     }
   }
 
+  // TODO cleanup /**
+  // * {@inheritDoc}
+  // */
+  // @Override
+  // protected boolean shouldCheckinRename(Document doc) {
+  // return false;
+  // }
+
   /**
-   * Add SP document suffix '-512' to given object ID if it doesn't end with it already.<br>
-   * NOTE: it is not documented SP feature.
+   * Add SP document's major version suffix '-512' to given object ID if it doesn't end with it already.<br>
    * 
    * @param id {@link String} original ID
    * @return object ID with SP suffix for CMIS document type
    */
+  @Deprecated
   protected String documentId(String id) {
-    if (id.endsWith(DOCUMENT_ID_SUFFIX)) {
+    if (id.endsWith(MAJOR_VERSION_ID_SUFFIX)) {
       return id;
     } else {
       StringBuilder did = new StringBuilder();
       did.append(id);
-      did.append(DOCUMENT_ID_SUFFIX);
+      did.append(MAJOR_VERSION_ID_SUFFIX);
       return did.toString();
     }
   }
@@ -766,8 +803,9 @@ public class SharepointAPI extends CMISAPI {
    * @param id {@link String} object ID
    * @return object ID without SP suffix for CMIS document type
    */
+  @Deprecated
   protected String simpleId(String id) {
-    int i = id.lastIndexOf(DOCUMENT_ID_SUFFIX);
+    int i = id.lastIndexOf(MAJOR_VERSION_ID_SUFFIX);
     if (i > 0) {
       return id.substring(0, i);
     } else {
