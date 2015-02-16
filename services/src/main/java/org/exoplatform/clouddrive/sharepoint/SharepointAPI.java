@@ -188,12 +188,12 @@ public class SharepointAPI extends CMISAPI {
      */
     @Override
     public boolean isAfter(ChangeToken other) {
-      boolean res = super.isAfter(other); // compareTo() > 0
       if (other instanceof SPChangeToken) {
         SPChangeToken otherSP = (SPChangeToken) other;
-        return res && this.getTimestamp() >= otherSP.getTimestamp();
+        // TODO return this.getTimestamp() >= otherSP.getTimestamp();
+        return this.getIndex() >= otherSP.getIndex();
       }
-      return res;
+      return super.isAfter(other); // compareTo() > 0;
     }
 
     /**
@@ -201,12 +201,12 @@ public class SharepointAPI extends CMISAPI {
      */
     @Override
     public boolean isBefore(ChangeToken other) {
-      boolean res = super.isBefore(other); // compareTo() < 0
       if (other instanceof SPChangeToken) {
         SPChangeToken otherSP = (SPChangeToken) other;
-        return res && this.getTimestamp() <= otherSP.getTimestamp();
+        // TODO return this.getTimestamp() <= otherSP.getTimestamp();
+        return this.getIndex() <= otherSP.getIndex();
       }
-      return res;
+      return super.isBefore(other); // compareTo() < 0;
     }
 
     /**
