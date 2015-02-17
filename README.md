@@ -6,9 +6,14 @@ Microsoft SharePoint connector for [eXo Cloud Drive](https://github.com/exo-addo
 Installation
 ------------
 
-Users of Platform 4.1 can simply install the add-on via *addon* tool from central catalog: select latest version, use "--unstable" key if want install latest development version. In Platform 4.0 you may install [Addons Manager](https://github.com/exoplatform/addons-manager) first and then do the same way, or [download](http://sourceforge.net/projects/exo/files/Addons/Cloud%20Drive/) the connector binaries manually and install by _extension.sh_ tool. 
+Users of Platform 4.1 can simply install the add-on via *addon* tool from central catalog: select latest version, use "--unstable" key if want install latest development version. 
+
+In Platform 4.0 you may install [Addons Manager](https://github.com/exoplatform/addons-manager) first and then do the same way, or [download](http://sourceforge.net/projects/exo/files/Addons/Cloud%20Drive/) the connector binaries manually and install by _extension.sh_ tool. 
 
 Before installing this connector to your eXo Platform server, install eXo Cloud Drive add-on itself. 
+
+    ./addon install exo-cloud-drive
+    ./addon install exo-sharepoint
 
 Configuration
 -------------
