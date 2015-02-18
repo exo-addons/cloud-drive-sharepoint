@@ -67,10 +67,10 @@
                 <value>
                   <object type="org.exoplatform.clouddrive.cmis.CMISProvider$AtomPub">
                     <field name="name">
-                      <string>Demo SharePoint</string>
+                      <string>Your SharePoint</string>
                     </field>
                     <field name="url">
-                      <string>http://exosharepoint.no-ip.info:8000/_vti_bin/cmis/rest?getRepositories</string>
+                      <string>http://sharepoint.host/_vti_bin/cmis/rest?getRepositories</string>
                     </field>
                   </object>
                 </value>
