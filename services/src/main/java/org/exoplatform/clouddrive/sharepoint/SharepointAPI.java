@@ -517,7 +517,6 @@ public class SharepointAPI extends CMISAPI {
     String reqURI = String.format(REST_SITETITLE, siteURL);
     try {
       HttpResponse resp = nativeClient.get(reqURI, "Web Site title");
-      JsonValue json = readJson(resp);
       StatusLine status = resp.getStatusLine();
       if (status != null) {
         if (status.getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
@@ -525,9 +524,14 @@ public class SharepointAPI extends CMISAPI {
           if (message == null || message.length() == 0) {
             message = resp.getEntity().toString();
           }
-          message += ". " + readError(json);
+          try {
+            message += ". " + readError(readJson(resp));
+          } catch(SharepointException e) {
+            // w/o entity message
+          }
           throw new CloudDriveAccessException("Unauthorized for reading site title. " + message);
         }
+        JsonValue json = readJson(resp);
         JsonValue dv = json.getElement("d");
         if (dv != null && !dv.isNull()) {// TODO dv null and resp is 401 - run proper ex
           JsonValue tv = dv.getElement("Title");
@@ -569,15 +573,19 @@ public class SharepointAPI extends CMISAPI {
       HttpResponse resp = nativeClient.get(reqURI, "Web Site current user");
       StatusLine status = resp.getStatusLine();
       if (status != null) {
-        JsonValue json = readJson(resp);
         if (status.getStatusCode() == HttpStatus.SC_UNAUTHORIZED) {
           String message = status.getReasonPhrase();
           if (message == null || message.length() == 0) {
             message = resp.getEntity().toString();
           }
-          message += ". " + readError(json);
+          try {
+            message += ". " + readError(readJson(resp));
+          } catch(SharepointException e) {
+            // w/o entity message
+          }
           throw new CloudDriveAccessException("Unauthorized for reading current user: " + message);
         }
+        JsonValue json = readJson(resp);
         JsonValue dv = json.getElement("d");
         if (dv != null && !dv.isNull()) {
           String id, loginName, title, email;
