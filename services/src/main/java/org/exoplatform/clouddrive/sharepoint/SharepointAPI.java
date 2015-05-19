@@ -247,7 +247,7 @@ public class SharepointAPI extends CMISAPI {
         sslContext.init(keymanagers, trustmanagers, null);
         socketFactory = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
       } catch (Exception ex) {
-        throw new IllegalStateException("Failure initializing default SSL context for Box REST client", ex);
+        throw new IllegalStateException("Failure initializing default SSL context for SharePoint REST client", ex);
       }
       schemeReg.register(new Scheme("https", 443, socketFactory));
 
