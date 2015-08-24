@@ -124,7 +124,7 @@
               <string>ShowSharepointFile</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.DefaultFileViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.DefaultFileViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -157,7 +157,7 @@
               <string>ShowSharepointText</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.TextViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.TextViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -220,7 +220,7 @@
               <string>ShowSharepointImage</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.ImageViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.ImageViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -272,7 +272,7 @@
               <string>ShowSharepointPDF</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.PDFViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.PDFViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -339,7 +339,7 @@
               <string>ShowSharepointFlash</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.FlashViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.FlashViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -381,7 +381,7 @@
               <string>ShowSharepointH264Video</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.H264VideoViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.H264VideoViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -439,7 +439,7 @@
               <string>ShowSharepointMpegVideo</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.MpegVideoViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.MpegVideoViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -482,7 +482,7 @@
               <string>ShowSharepointVideoAudio</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.VideoAudioViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.VideoAudioViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -526,7 +526,7 @@
   <!--
   Dedicated ECMS menu action for SharePoint provider.
   -->
-  <external-component-plugins>
+  <!-- external-component-plugins>
     <target-component>org.exoplatform.webui.ext.UIExtensionManager</target-component>
     <component-plugin>
       <name>Add CloudDrive SharePoint Actions</name>
@@ -564,7 +564,7 @@
               <string>ShowCmisFile</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.DefaultFileViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.DefaultFileViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -598,7 +598,7 @@
               <string>ShowCmisText</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.TextViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.TextViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -622,15 +622,8 @@
                   <object type="org.exoplatform.clouddrive.ecms.filters.FileTypeFilter">
                     <field name="mimeTypes">
                       <collection type="java.util.LinkedHashSet"> 
-                        <!-- text/rtf, text/csv and others like that should be filtered by UI comp with lower rank! -->
                         <value><string>text/</string></value>
                         <value><string>application/x-</string></value>
-                        <!-- value><string>text/html</string></value>
-                        <value><string>text/plain</string></value>
-                        <value><string>text/xml</string></value>
-                        <value><string>text/css</string></value>
-                        <value><string>text/javascript</string></value>
-                        <value><string>text/ecmascript</string></value -->
                         <value><string>application/xml</string></value>
                         <value><string>application/xhtml</string></value>
                         <value><string>application/xhtml+xml</string></value>
@@ -662,7 +655,7 @@
               <string>ShowCmisImage</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.ImageViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.ImageViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -715,7 +708,7 @@
               <string>ShowCmisPDF</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.PDFViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.PDFViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -783,7 +776,7 @@
               <string>ShowCmisFlash</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.FlashViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.FlashViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -826,7 +819,7 @@
               <string>ShowCmisH264Video</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.H264VideoViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.H264VideoViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -885,7 +878,7 @@
               <string>ShowCmisMpegVideo</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.MpegVideoViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.MpegVideoViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -929,7 +922,7 @@
               <string>ShowCmisVideoAudio</string>
             </field>
             <field name="component">
-              <string>org.exoplatform.clouddrive.cmis.ecms.viewer.VideoAudioViewer</string>
+              <string>org.exoplatform.clouddrive.ecms.viewer.VideoAudioViewer</string>
             </field>
             <field name="category">
               <string>FileViewer</string>
@@ -969,7 +962,7 @@
         </object-param>
       </init-params>
     </component-plugin>
-  </external-component-plugins>
+  </external-component-plugins -->
 
   <!-- ResourceBundleService with texts for CMIS UI support. -->
   <external-component-plugins>
