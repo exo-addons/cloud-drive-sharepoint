@@ -58,6 +58,7 @@
           <property name="connector-host" value="${clouddrive.service.host:localhost:8080}" />
           <property name="connector-schema" value="${clouddrive.service.schema:http}" />
           <property name="login-sso" value="${clouddrive.login.sso:false}" />
+          <property name="disable" value="${clouddrive.sharepoint.disable:false}" />
         </properties-param>
         <object-param>
           <name>predefined-services</name>

@@ -18,19 +18,13 @@
  */
 package org.exoplatform.clouddrive.sharepoint;
 
-import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.exoplatform.clouddrive.CloudDriveException;
-import org.exoplatform.clouddrive.cmis.CMISException;
 import org.exoplatform.clouddrive.cmis.CMISUser;
 import org.exoplatform.clouddrive.cmis.JCRLocalCMISDrive;
 import org.exoplatform.clouddrive.jcr.NodeFinder;
 import org.exoplatform.clouddrive.sharepoint.SharepointConnector.API;
 import org.exoplatform.clouddrive.utils.ExtendedMimeTypeResolver;
 import org.exoplatform.services.jcr.ext.app.SessionProviderService;
-
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -94,8 +88,8 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
    * @throws CloudDriveException
    */
   protected static SharepointUser loadUser(API apiBuilder, Node driveNode) throws RepositoryException,
-                                                                          SharepointException,
-                                                                          CloudDriveException {
+                                                                           SharepointException,
+                                                                           CloudDriveException {
     SharepointUser user = (SharepointUser) JCRLocalCMISDrive.loadUser(apiBuilder, driveNode);
     return user;
   }
@@ -106,32 +100,6 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
   @Override
   public SharepointUser getUser() {
     return (SharepointUser) user;
-  }
-
-  @Deprecated 
-  protected void readNodes_Old(Node parent, Map<String, List<Node>> nodes, boolean deep) throws RepositoryException {
-    // gather original mappings
-    super.readNodes(parent, nodes, deep);
-
-    final SharepointAPI api = getUser().api();
-
-    // reconstruct the map in its order but with double mappings for files: by simple ID and by SP document ID
-    // simple ID actual for sync based on Changes Log where SP doesn't show suffixed IDs of documents
-    Map<String, List<Node>> newNodes = new LinkedHashMap<String, List<Node>>();
-    for (Map.Entry<String, List<Node>> me : nodes.entrySet()) {
-      if (me.getValue().size() > 0) {
-        if (fileAPI.isFile(me.getValue().get(0))) {
-          newNodes.put(api.simpleId(me.getKey()), me.getValue());
-          newNodes.put(api.documentId(me.getKey()), me.getValue());
-        } else {
-          newNodes.put(me.getKey(), me.getValue());
-        }
-      }
-    }
-
-    // replace the map content
-    nodes.clear();
-    nodes.putAll(newNodes);
   }
 
 }
