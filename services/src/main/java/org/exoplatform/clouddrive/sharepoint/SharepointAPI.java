@@ -264,9 +264,8 @@ public class SharepointAPI extends CMISAPI {
       // authpref.add(AuthPolicy.BASIC);
       // client.getParams().setParameter(AuthPNames.PROXY_AUTH_PREF, authpref);
 
-      client.getCredentialsProvider()
-            .setCredentials(new AuthScope(siteHost.getHostName(), siteHost.getPort()),
-                            new UsernamePasswordCredentials(userName, password));
+      client.getCredentialsProvider().setCredentials(new AuthScope(siteHost.getHostName(), siteHost.getPort()),
+                                                     new UsernamePasswordCredentials(userName, password));
 
       this.httpClient = client;
 
@@ -286,10 +285,10 @@ public class SharepointAPI extends CMISAPI {
     }
 
     HttpResponse get(String uri, String opName) throws ClientProtocolException,
-                                               IOException,
-                                               IllegalStateException,
-                                               SharepointServiceNotFound,
-                                               SharepointException {
+                                                IOException,
+                                                IllegalStateException,
+                                                SharepointServiceNotFound,
+                                                SharepointException {
       HttpGet httpget = new HttpGet(uri);
       httpget.setHeader("accept", "application/json;odata=verbose");
       HttpResponse resp = execute(httpget);
@@ -298,9 +297,9 @@ public class SharepointAPI extends CMISAPI {
     }
 
     void checkError(HttpResponse resp, String opName) throws IllegalStateException,
-                                                     IOException,
-                                                     SharepointException,
-                                                     SharepointServiceNotFound {
+                                                      IOException,
+                                                      SharepointException,
+                                                      SharepointServiceNotFound {
       int statusCode = resp.getStatusLine().getStatusCode();
       switch (statusCode) {
       case HttpStatus.SC_NOT_FOUND:
@@ -405,8 +404,7 @@ public class SharepointAPI extends CMISAPI {
    * @throws CMISException
    * @throws CloudDriveException
    */
-  protected SharepointAPI(String serviceURL, String userName, String password) throws CMISException,
-      CloudDriveException {
+  protected SharepointAPI(String serviceURL, String userName, String password) throws CMISException, CloudDriveException {
     super(serviceURL, userName, password);
 
     this.userName = userName;
@@ -434,8 +432,7 @@ public class SharepointAPI extends CMISAPI {
    * {@inheritDoc}
    */
   @Override
-  protected ChangesIterator getChanges(ChangeToken changeToken) throws CMISException,
-                                                               CloudDriveAccessException {
+  protected ChangesIterator getChanges(ChangeToken changeToken) throws CMISException, CloudDriveAccessException {
     return new ChangesIterator(changeToken);
   }
 
@@ -511,9 +508,7 @@ public class SharepointAPI extends CMISAPI {
    * @return
    * @throws SharepointException
    */
-  protected String readSiteTitle() throws SharepointServiceNotFound,
-                                  SharepointException,
-                                  CloudDriveAccessException {
+  protected String readSiteTitle() throws SharepointServiceNotFound, SharepointException, CloudDriveAccessException {
     String reqURI = String.format(REST_SITETITLE, siteURL);
     try {
       HttpResponse resp = nativeClient.get(reqURI, "Web Site title");
@@ -526,7 +521,7 @@ public class SharepointAPI extends CMISAPI {
           }
           try {
             message += ". " + readError(readJson(resp));
-          } catch(SharepointException e) {
+          } catch (SharepointException e) {
             // w/o entity message
           }
           throw new CloudDriveAccessException("Unauthorized for reading site title. " + message);
@@ -565,9 +560,7 @@ public class SharepointAPI extends CMISAPI {
    * @throws SharepointServiceNotFound
    * @throws CloudDriveAccessException
    */
-  protected User readSiteUser() throws SharepointException,
-                               SharepointServiceNotFound,
-                               CloudDriveAccessException {
+  protected User readSiteUser() throws SharepointException, SharepointServiceNotFound, CloudDriveAccessException {
     String reqURI = String.format(REST_CURRENTUSER, siteURL);
     try {
       HttpResponse resp = nativeClient.get(reqURI, "Web Site current user");
@@ -580,7 +573,7 @@ public class SharepointAPI extends CMISAPI {
           }
           try {
             message += ". " + readError(readJson(resp));
-          } catch(SharepointException e) {
+          } catch (SharepointException e) {
             // w/o entity message
           }
           throw new CloudDriveAccessException("Unauthorized for reading current user: " + message);
@@ -637,9 +630,9 @@ public class SharepointAPI extends CMISAPI {
   }
 
   protected JsonValue readJson(HttpResponse resp) throws JsonException,
-                                                 IllegalStateException,
-                                                 IOException,
-                                                 SharepointException {
+                                                  IllegalStateException,
+                                                  IOException,
+                                                  SharepointException {
     HttpEntity entity = resp.getEntity();
     Header contentType = entity.getContentType();
     if (contentType != null && contentType.getValue() != null
@@ -658,8 +651,7 @@ public class SharepointAPI extends CMISAPI {
     HttpEntity entity = resp.getEntity();
     Header contentType = entity.getContentType();
     StringBuilder text = new StringBuilder();
-    if (contentType == null || contentType.getValue() == null
-        || contentType.getValue().startsWith(MediaType.TEXT_PLAIN)) {
+    if (contentType == null || contentType.getValue() == null || contentType.getValue().startsWith(MediaType.TEXT_PLAIN)) {
       // read as text if type unknown or plain/text
       Charset charset;
       try {
@@ -727,6 +719,7 @@ public class SharepointAPI extends CMISAPI {
 
     ObjectFactory factory = session.getObjectFactory();
 
+    // TODO cleanup?
     // for (Property<?> prop : obj.getProperties()) {
     // PropertyData<?> pdata;
     // if (PropertyIds.OBJECT_TYPE_ID.equals(prop.getId())) {
@@ -777,48 +770,4 @@ public class SharepointAPI extends CMISAPI {
       return renamed;
     }
   }
-
-  // TODO cleanup /**
-  // * {@inheritDoc}
-  // */
-  // @Override
-  // protected boolean shouldCheckinRename(Document doc) {
-  // return false;
-  // }
-
-  /**
-   * Add SP document's major version suffix '-512' to given object ID if it doesn't end with it already.<br>
-   * 
-   * @param id {@link String} original ID
-   * @return object ID with SP suffix for CMIS document type
-   */
-  @Deprecated
-  protected String documentId(String id) {
-    if (id.endsWith(MAJOR_VERSION_ID_SUFFIX)) {
-      return id;
-    } else {
-      StringBuilder did = new StringBuilder();
-      did.append(id);
-      did.append(MAJOR_VERSION_ID_SUFFIX);
-      return did.toString();
-    }
-  }
-
-  /**
-   * Remove SP document suffix '-512' in given object ID if it ends with it.<br>
-   * NOTE: it is not documented SP feature.
-   * 
-   * @param id {@link String} object ID
-   * @return object ID without SP suffix for CMIS document type
-   */
-  @Deprecated
-  protected String simpleId(String id) {
-    int i = id.lastIndexOf(MAJOR_VERSION_ID_SUFFIX);
-    if (i > 0) {
-      return id.substring(0, i);
-    } else {
-      return id;
-    }
-  }
-
 }

@@ -26,6 +26,10 @@ import org.exoplatform.clouddrive.sharepoint.SharepointConnector.API;
 import org.exoplatform.clouddrive.utils.ExtendedMimeTypeResolver;
 import org.exoplatform.services.jcr.ext.app.SessionProviderService;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
@@ -34,6 +38,34 @@ import javax.jcr.RepositoryException;
  * 
  */
 public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
+
+  class SharepointFileChange extends FileChange {
+
+    SharepointFileChange(String fileId, FileChange orig) throws RepositoryException, CloudDriveException {
+      super(orig.getChangeId(),
+            orig.getPath(),
+            fileId, // here we use given file ID
+            orig.isFolder(),
+            orig.getChangeType(),
+            orig.getSynchronizer());
+      if (orig.getFileUUID() != null) {
+        this.fileUUID = orig.getFileUUID();
+      }
+      if (orig.getFilePath() != null) {
+        this.filePath = orig.getFilePath();
+      }
+      if (orig.getNode() != null) {
+        this.node = orig.getNode();
+      }
+      if (orig.getFile() != null) {
+        this.file = orig.getFile(); // this file will have origin file ID
+      }
+      for (int i = 0; i < orig.getApplied(); i++) {
+        this.applied.countDown();
+      }
+    }
+
+  }
 
   /**
    * @param user
@@ -102,4 +134,65 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
     return (SharepointUser) user;
   }
 
+  /**
+   * Extract actual file ID without its version classifier in SP. If given file ID is <code>null</code> then
+   * it will be returned as is.
+   * 
+   * @param fileId String
+   * @return String with file ID
+   */
+  protected String simpleFileId(String fileId) {
+    if (fileId != null) {
+      String[] fidParts = fileId.split("-");
+      if (fidParts.length > 1) {
+        return fidParts[0]; // first part of ID like 65-512 (or 65-1024 and so on)
+      }
+    }
+    return fileId;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void cleanUpdated(String fileId) throws RepositoryException, CloudDriveException {
+    super.cleanUpdated(simpleFileId(fileId));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected void cleanRemoved(String fileId) throws RepositoryException, CloudDriveException {
+    super.cleanRemoved(simpleFileId(fileId));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected synchronized void saveChanges(List<FileChange> changes) throws RepositoryException, CloudDriveException {
+    List<FileChange> fileChanges = new ArrayList<FileChange>();
+    for (FileChange ch : changes) {
+      fileChanges.add(new SharepointFileChange(simpleFileId(ch.getFileId()), ch));
+    }
+    super.saveChanges(fileChanges);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected synchronized void commitChanges(Collection<FileChange> changes,
+                                            Collection<FileChange> skipped) throws RepositoryException, CloudDriveException {
+    List<FileChange> filesChanged = new ArrayList<FileChange>();
+    for (FileChange ch : changes) {
+      filesChanged.add(new SharepointFileChange(simpleFileId(ch.getFileId()), ch));
+    }
+    List<FileChange> filesSkipped = new ArrayList<FileChange>();
+    for (FileChange ch : skipped) {
+      filesSkipped.add(new SharepointFileChange(simpleFileId(ch.getFileId()), ch));
+    }
+    super.commitChanges(filesChanged, filesSkipped);
+  }
 }
