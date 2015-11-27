@@ -24,8 +24,7 @@
   xmlns="http://www.gatein.org/xml/ns/gatein_resources_1_3">
 
   <module>
-    <name>cloudDrive.sharepoint</name>
-    <as>cloudDriveSharePoint</as>
+    <name>cloudDrive_sharepoint</name>
     <script>
       <path>/js/clouddrive-sharepoint.js</path>
     </script>
@@ -36,7 +35,7 @@
       <module>cloudDrive</module>
     </depends>
     <depends>
-      <module>cloudDrive.cmis</module>
+      <module>cloudDrive_cmis</module>
     </depends>
   </module>
 

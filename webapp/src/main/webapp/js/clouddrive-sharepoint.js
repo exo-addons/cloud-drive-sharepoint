@@ -2,9 +2,9 @@
  * SharePoint support for eXo Cloud Drive.
  * 
  */
-(function($, cloudDrive, cloudDriveCMIS) {
+(function($, cloudDrive, cloudDrive_cmis) {
 
-	// this module goal is to load cloudDrive.cmis module 
+	// this module goal is to load cloudDrive_cmis module 
 	
 	return {}; // empty client
-})($, cloudDrive, cloudDriveCMIS);
+})($, cloudDrive, cloudDrive_cmis);
