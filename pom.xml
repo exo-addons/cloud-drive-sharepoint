@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-Copyright (C) 2015 eXo Platform SAS.
+Copyright (C) 2016 eXo Platform SAS.
 
 This is free software; you can redistribute it and/or modify it
 under the terms of the GNU Lesser General Public License as
@@ -25,10 +25,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <parent>
     <groupId>org.exoplatform.addons</groupId>
     <artifactId>addons-parent-pom</artifactId>
-    <version>5</version>
+    <version>6</version>
   </parent>
   <artifactId>exo-clouddrive-sharepoint</artifactId>
-  <version>1.4.x-SNAPSHOT</version>
+  <version>1.5.x-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>eXo Cloud Drive :: Connectors :: SharePoint</name>
   <description>eXo Cloud Drive SharePoint connector</description>
@@ -42,27 +42,27 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <properties>
     <!-- Defaut compiler settings -->
     <maven.compiler.optimize>true</maven.compiler.optimize>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- eXo Modules -->
-    <org.exoplatform.platform.version>4.3.1-M07</org.exoplatform.platform.version>
+    <org.exoplatform.platform.version>4.4.0-M23</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
-    <org.exoplatform.exo-clouddrive.version>1.4.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
+    <org.exoplatform.exo-clouddrive.version>1.5.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
-    <org.exoplatform.jcr-services.version>1.16.7-M01</org.exoplatform.jcr-services.version>
-    <test.groovy.version>2.0.8</test.groovy.version>
+    <org.exoplatform.jcr-services.version>1.17.0-M11</org.exoplatform.jcr-services.version>
+    <test.groovy.version>2.4.7</test.groovy.version>
     <!-- spock.version>1.0-groovy-2.0-SNAPSHOT</spock.version -->
-    <spock.version>0.7-groovy-2.0</spock.version>
-    <objenesis.version>1.2</objenesis.version>
-    <cglib.version>2.2.2</cglib.version>
-    <asm.version>4.0</asm.version>
-    <junit.version>4.11</junit.version>
+    <spock.version>1.0-groovy-2.4</spock.version>
+    <objenesis.version>2.4</objenesis.version>
+    <cglib.version>3.2.4</cglib.version>
+    <asm.version>5.1</asm.version>
+    <junit.version>4.12</junit.version>
     <hamcrest.version>1.3</hamcrest.version>
     <maven.gmaven.runtime.version>1.5</maven.gmaven.runtime.version>
-    <maven.surefire.junit47.version>2.16</maven.surefire.junit47.version>
+    <maven.surefire.junit47.version>2.19.1</maven.surefire.junit47.version>
 
     <!-- maven-release-plugin -->
     <arguments>-Prelease,distrib,exo-staging -Dgatein.working.dir=target -Dmaven.wagon.provider.http=httpclient</arguments>
