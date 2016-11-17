@@ -14,8 +14,9 @@
  */
 .uiIconEcmsConnectDialog-sharepoint:before {
 	content: url("icons/sharepoint2013-gray-24x24.png");
-	height: 32px !important;
-	width: 32px !important;
+	/* Fix image pos to be more centered*/
+	position: relative;
+  left: 2px;
 }
 
 /*
@@ -53,7 +54,8 @@
   top: -21px;
   width: 20px;
   height: 20px;
-  position: absolute !important;
+  position: relative !important;
+  display: inline-block;
 	-webkit-transform: scale(0.7);
 	-moz-transform: scale(0.7);
 	-o-transform: scale(0.7);
