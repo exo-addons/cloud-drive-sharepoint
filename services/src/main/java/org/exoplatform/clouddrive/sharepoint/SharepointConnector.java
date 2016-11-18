@@ -55,10 +55,13 @@ import javax.jcr.RepositoryException;
  */
 public class SharepointConnector extends CMISConnector implements CMISConnectorImpl {
 
+  /** The Constant SP_VENDORNAME. */
   public static final String SP_VENDORNAME     = "Microsoft Corporation";
 
+  /** The Constant SP_PRODUCTNAME. */
   public static final String SP_PRODUCTNAME    = "Office SharePoint Server";
 
+  /** The Constant SP_AUTHPROVIDERID. */
   public static final String SP_AUTHPROVIDERID = "cmis";
 
   /**
@@ -108,6 +111,17 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
     }
   }
 
+  /**
+   * Instantiates a new sharepoint connector.
+   *
+   * @param jcrService the jcr service
+   * @param sessionProviders the session providers
+   * @param finder the finder
+   * @param mimeTypes the mime types
+   * @param params the params
+   * @param codeAuth the code auth
+   * @throws ConfigurationException the configuration exception
+   */
   public SharepointConnector(RepositoryService jcrService,
                              SessionProviderService sessionProviders,
                              NodeFinder finder,

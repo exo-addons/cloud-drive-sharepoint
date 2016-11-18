@@ -26,28 +26,32 @@ import org.exoplatform.clouddrive.cmis.CMISException;
  */
 public class SharepointException extends CMISException {
 
-  /**
-   * 
-   */
+  /** The Constant serialVersionUID. */
   private static final long serialVersionUID = 1L;
 
   /**
-   * @param message
+   * Instantiates a new sharepoint exception.
+   *
+   * @param message the message
    */
   public SharepointException(String message) {
     super(message);
   }
 
   /**
-   * @param message
-   * @param cause
+   * Instantiates a new sharepoint exception.
+   *
+   * @param message the message
+   * @param cause the cause
    */
   public SharepointException(String message, Throwable cause) {
     super(message, cause);
   }
 
   /**
-   * @param cause
+   * Instantiates a new sharepoint exception.
+   *
+   * @param cause the cause
    */
   public SharepointException(Throwable cause) {
     super(cause);
