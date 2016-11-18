@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2014 eXo Platform SAS.
+ * Copyright (C) 2003-2016 eXo Platform SAS.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -87,18 +87,33 @@ import javax.ws.rs.core.MediaType;
  */
 public class SharepointAPI extends CMISAPI {
 
+  /** The Constant LOG. */
   protected static final Log    LOG                     = ExoLogger.getLogger(SharepointAPI.class);
 
+  /** The Constant MAJOR_VERSION_ID_SUFFIX. */
   protected static final String MAJOR_VERSION_ID_SUFFIX = "-512";
 
+  /** The Constant REST_CONTEXTINFO. */
   protected static final String REST_CONTEXTINFO        = "%s/_api/contextinfo";
 
+  /** The Constant REST_CURRENTUSER. */
   protected static final String REST_CURRENTUSER        = "%s/_api/Web/CurrentUser";
 
+  /** The Constant REST_SITETITLE. */
   protected static final String REST_SITETITLE          = "%s/_api/Web/Title";
 
+  /**
+   * The Class ChangesIterator.
+   */
   protected class ChangesIterator extends org.exoplatform.clouddrive.cmis.CMISAPI.ChangesIterator {
 
+    /**
+     * Instantiates a new changes iterator.
+     *
+     * @param startChangeToken the start change token
+     * @throws CMISException the CMIS exception
+     * @throws CloudDriveAccessException the cloud drive access exception
+     */
     ChangesIterator(ChangeToken startChangeToken) throws CMISException, CloudDriveAccessException {
       super(startChangeToken);
     }
@@ -106,7 +121,6 @@ public class SharepointAPI extends CMISAPI {
     /**
      * {@inheritDoc}
      * 
-     * @throws CloudDriveAccessException
      */
     @Override
     protected Iterator<ChangeEvent> nextChunk() throws CMISException, CloudDriveAccessException {
@@ -137,12 +151,23 @@ public class SharepointAPI extends CMISAPI {
     }
   }
 
+  /**
+   * The Class SPChangeToken.
+   */
   protected class SPChangeToken extends ChangeToken {
 
+    /** The timestamp. */
     protected final long timestamp;
 
+    /** The index. */
     protected final long index;
 
+    /**
+     * Instantiates a new SP change token.
+     *
+     * @param token the token
+     * @throws CMISException the CMIS exception
+     */
     protected SPChangeToken(String token) throws CMISException {
       super(token);
 
@@ -176,6 +201,12 @@ public class SharepointAPI extends CMISAPI {
       return false;
     }
 
+    /**
+     * Equals.
+     *
+     * @param other the other
+     * @return true, if successful
+     */
     public boolean equals(SPChangeToken other) {
       if (!isEmpty() && !other.isEmpty()) {
         return this.getIndex() == other.getIndex() && this.getTimestamp() == other.getTimestamp();
@@ -210,6 +241,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the timestamp.
+     *
      * @return the timestamp
      */
     public long getTimestamp() {
@@ -217,6 +250,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the index.
+     *
      * @return the index
      */
     public long getIndex() {
@@ -224,12 +259,20 @@ public class SharepointAPI extends CMISAPI {
     }
   }
 
+  /**
+   * The Class RESTClient.
+   */
   protected class RESTClient {
 
+    /** The http client. */
     protected final HttpClient  httpClient;
 
+    /** The context. */
     protected final HttpContext context;
 
+    /**
+     * Instantiates a new REST client.
+     */
     protected RESTClient() {
       super();
 
@@ -280,10 +323,30 @@ public class SharepointAPI extends CMISAPI {
       this.context.setAttribute(ClientContext.AUTH_CACHE, authCache);
     }
 
+    /**
+     * Execute.
+     *
+     * @param request the request
+     * @return the http response
+     * @throws ClientProtocolException the client protocol exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     HttpResponse execute(HttpUriRequest request) throws ClientProtocolException, IOException {
       return this.httpClient.execute(request, context);
     }
 
+    /**
+     * Gets the.
+     *
+     * @param uri the uri
+     * @param opName the op name
+     * @return the http response
+     * @throws ClientProtocolException the client protocol exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IllegalStateException the illegal state exception
+     * @throws SharepointServiceNotFound the sharepoint service not found
+     * @throws SharepointException the sharepoint exception
+     */
     HttpResponse get(String uri, String opName) throws ClientProtocolException,
                                                 IOException,
                                                 IllegalStateException,
@@ -296,6 +359,16 @@ public class SharepointAPI extends CMISAPI {
       return resp;
     }
 
+    /**
+     * Check error.
+     *
+     * @param resp the resp
+     * @param opName the op name
+     * @throws IllegalStateException the illegal state exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws SharepointException the sharepoint exception
+     * @throws SharepointServiceNotFound the sharepoint service not found
+     */
     void checkError(HttpResponse resp, String opName) throws IllegalStateException,
                                                       IOException,
                                                       SharepointException,
@@ -317,16 +390,30 @@ public class SharepointAPI extends CMISAPI {
    */
   public class User {
 
+    /** The id. */
     final String  id;
 
+    /** The login name. */
     final String  loginName;
 
+    /** The title. */
     final String  title;
 
+    /** The email. */
     final String  email;
 
+    /** The is site admin. */
     final boolean isSiteAdmin;
 
+    /**
+     * Instantiates a new user.
+     *
+     * @param id the id
+     * @param loginName the login name
+     * @param title the title
+     * @param email the email
+     * @param isSiteAdmin the is site admin
+     */
     User(String id, String loginName, String title, String email, boolean isSiteAdmin) {
       super();
       this.id = id;
@@ -337,6 +424,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the id.
+     *
      * @return the id
      */
     public String getId() {
@@ -344,6 +433,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the login name.
+     *
      * @return the loginName
      */
     public String getLoginName() {
@@ -351,6 +442,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the title.
+     *
      * @return the title
      */
     public String getTitle() {
@@ -358,6 +451,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the email.
+     *
      * @return the email
      */
     public String getEmail() {
@@ -365,6 +460,8 @@ public class SharepointAPI extends CMISAPI {
     }
 
     /**
+     * Gets the checks if is site admin.
+     *
      * @return the isSiteAdmin
      */
     public boolean getIsSiteAdmin() {
@@ -378,6 +475,7 @@ public class SharepointAPI extends CMISAPI {
    */
   protected final String     siteURL, userName, password;
 
+  /** The site host. */
   protected final HttpHost   siteHost;
 
   /**
@@ -397,12 +495,12 @@ public class SharepointAPI extends CMISAPI {
 
   /**
    * Create API from user credentials.
-   * 
+   *
    * @param serviceURL {@link String}
    * @param userName {@link String}
    * @param password {@link String}
-   * @throws CMISException
-   * @throws CloudDriveException
+   * @throws CMISException the CMIS exception
+   * @throws CloudDriveException the cloud drive exception
    */
   protected SharepointAPI(String serviceURL, String userName, String password) throws CMISException, CloudDriveException {
     super(serviceURL, userName, password);
@@ -482,6 +580,8 @@ public class SharepointAPI extends CMISAPI {
   }
 
   /**
+   * Gets the current SharePoint user.
+   *
    * @return the siteUser
    */
   public User getSiteUser() {
@@ -489,6 +589,8 @@ public class SharepointAPI extends CMISAPI {
   }
 
   /**
+   * Gets the sharePoint site title.
+   *
    * @return the siteTitle
    */
   public String getSiteTitle() {
@@ -496,6 +598,8 @@ public class SharepointAPI extends CMISAPI {
   }
 
   /**
+   * Gets the access parameter for HTTP client to native SP APIes.
+   *
    * @return the siteURL
    */
   public String getSiteURL() {
@@ -504,9 +608,11 @@ public class SharepointAPI extends CMISAPI {
 
   /**
    * Read site name from ShapePoint API.
-   * 
-   * @return
-   * @throws SharepointException
+   *
+   * @return the string
+   * @throws SharepointServiceNotFound the sharepoint service not found
+   * @throws SharepointException the sharepoint exception
+   * @throws CloudDriveAccessException the cloud drive access exception
    */
   protected String readSiteTitle() throws SharepointServiceNotFound, SharepointException, CloudDriveAccessException {
     String reqURI = String.format(REST_SITETITLE, siteURL);
@@ -554,11 +660,11 @@ public class SharepointAPI extends CMISAPI {
 
   /**
    * Read current user name from ShapePoint API.
-   * 
-   * @return
-   * @throws SharepointException
-   * @throws SharepointServiceNotFound
-   * @throws CloudDriveAccessException
+   *
+   * @return the user
+   * @throws SharepointException the sharepoint exception
+   * @throws SharepointServiceNotFound the sharepoint service not found
+   * @throws CloudDriveAccessException the cloud drive access exception
    */
   protected User readSiteUser() throws SharepointException, SharepointServiceNotFound, CloudDriveAccessException {
     String reqURI = String.format(REST_CURRENTUSER, siteURL);
@@ -629,6 +735,16 @@ public class SharepointAPI extends CMISAPI {
     }
   }
 
+  /**
+   * Read json.
+   *
+   * @param resp the resp
+   * @return the json value
+   * @throws JsonException the json exception
+   * @throws IllegalStateException the illegal state exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   * @throws SharepointException the sharepoint exception
+   */
   protected JsonValue readJson(HttpResponse resp) throws JsonException,
                                                   IllegalStateException,
                                                   IOException,
@@ -647,6 +763,14 @@ public class SharepointAPI extends CMISAPI {
     }
   }
 
+  /**
+   * Read text.
+   *
+   * @param resp the resp
+   * @return the string
+   * @throws IllegalStateException the illegal state exception
+   * @throws IOException Signals that an I/O exception has occurred.
+   */
   protected String readText(HttpResponse resp) throws IllegalStateException, IOException {
     HttpEntity entity = resp.getEntity();
     Header contentType = entity.getContentType();
@@ -676,6 +800,12 @@ public class SharepointAPI extends CMISAPI {
     return text.toString();
   }
 
+  /**
+   * Read error.
+   *
+   * @param json the json
+   * @return the string
+   */
   protected String readError(JsonValue json) {
     JsonValue error = json.getElement("error");
     if (error != null) {

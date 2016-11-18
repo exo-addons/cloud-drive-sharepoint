@@ -12,10 +12,11 @@
 /*
  * Icon of a provider in connect dialog (where all available connectors visible)
  */
-.uiIconEcmsConnectDialog-sharepoint {
-	background: url('icons/sharepoint2013-gray-24x24.png') no-repeat scroll left center transparent !important;
-	height: 32px !important;
-	width: 32px !important;
+.uiIconEcmsConnectDialog-sharepoint:before {
+	content: url("icons/sharepoint2013-gray-24x24.png");
+	/* Fix image pos to be more centered*/
+	position: relative;
+  left: 2px;
 }
 
 /*
@@ -31,9 +32,9 @@
 /*
  * Drive icon in side-bar tree.
  */
-.uiIcon16x16CloudDrive-sharepoint {
-	left: -1px;
-	top: 1px;
+.uiIcon16x16CloudDrive-sharepoint:before {
+	left: -15px;
+  top: 0px;
 	width: 16px;
   height: 16px;
   position: absolute !important;
@@ -42,31 +43,33 @@
 	-o-transform: scale(0.36);
 	-ms-transform: scale(0.36);
 	transform: scale(0.36);
-	background: url("icons/sharepoint2013-lightgray-16x16.png") no-repeat center center transparent !important;
+	content: url("icons/sharepoint2013-lightgray-16x16.png");
 }
 
 /*
  * Drive icon in Admin/List view.
  */
-.uiIcon24x24CloudDrive-sharepoint {
-	left: 1px;
-  top: -19px;
+.uiIcon24x24CloudDrive-sharepoint:before {
+	left: 3px;
+  top: -21px;
   width: 20px;
   height: 20px;
+  position: relative !important;
+  display: inline-block;
 	-webkit-transform: scale(0.7);
 	-moz-transform: scale(0.7);
 	-o-transform: scale(0.7);
 	-ms-transform: scale(0.7);
 	transform: scale(0.7);
-	background: url("icons/sharepoint2013-lightgray-16x16.png") no-repeat center center transparent !important;
+	content: url("icons/sharepoint2013-lightgray-16x16.png");
 }
 
 /*
  * Drive icon in Icon view.
  */
-.uiIcon64x64CloudDrive-sharepoint {
-	left: 44px;
-	top: 17px;
+.uiIcon64x64CloudDrive-sharepoint:before {
+	left: -50px;
+  top: 3px;
 	width: 40px;
   height: 40px;
   position: absolute !important;
@@ -75,16 +78,26 @@
 	-o-transform: scale(0.7);
 	-ms-transform: scale(0.7);
 	transform: scale(0.7);
-	background: url("icons/sharepoint2013-lightgray-32x32.png") no-repeat center center transparent !important;
+	content: url("icons/sharepoint2013-lightgray-32x32.png");
 }
 
 /*
  * Responsive styles
  */
 @media (min-width: 481px) and (max-width: 1024px) {
-	.uiIcon24x24CloudDrive-sharepoint {
-		left: 4px;
-	  top: -28px;
+	.uiIcon16x16CloudDrive-sharepoint:before {
+		left: -17px;
+		top: 2px;
+		-webkit-transform: scale(0.45);
+		-moz-transform: scale(0.45);
+		-o-transform: scale(0.45);
+		-ms-transform: scale(0.45);
+		transform: scale(0.45);
+	}
+	
+	.uiIcon24x24CloudDrive-sharepoint:before {
+		left: 7px;
+	  top: -30px;
 	  -webkit-transform: scale(0.9);
 		-moz-transform: scale(0.9);
 		-o-transform: scale(0.9);
@@ -92,23 +105,13 @@
 		transform: scale(0.9);
 	}
 	
-	.uiIcon64x64CloudDrive-sharepoint {
-		left: 44px;
-		top: 27px;
+	.uiIcon64x64CloudDrive-sharepoint:before {
+		left: -57px;
+    top: -5px;
 		-webkit-transform: scale(0.9);
 		-moz-transform: scale(0.9);
 		-o-transform: scale(0.9);
 		-ms-transform: scale(0.9);
 		transform: scale(0.9);
-	}
-	
-	.uiIcon16x16CloudDrive-sharepoint {
-		left: 1px;
-		top: 3px;
-		-webkit-transform: scale(0.45);
-		-moz-transform: scale(0.45);
-		-o-transform: scale(0.45);
-		-ms-transform: scale(0.45);
-		transform: scale(0.45);
 	}
 }

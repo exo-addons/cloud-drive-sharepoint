@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2013 eXo Platform SAS.
+ * Copyright (C) 2003-2016 eXo Platform SAS.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -39,8 +39,19 @@ import javax.jcr.RepositoryException;
  */
 public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
 
+  /**
+   * The Class SharepointFileChange.
+   */
   class SharepointFileChange extends FileChange {
 
+    /**
+     * Instantiates a new sharepoint file change.
+     *
+     * @param fileId the file id
+     * @param orig the orig
+     * @throws RepositoryException the repository exception
+     * @throws CloudDriveException the cloud drive exception
+     */
     SharepointFileChange(String fileId, FileChange orig) throws RepositoryException, CloudDriveException {
       super(orig.getChangeId(),
             orig.getPath(),
@@ -68,11 +79,16 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
   }
 
   /**
-   * @param user
-   * @param driveNode
-   * @param sessionProviders
-   * @throws CloudDriveException
-   * @throws RepositoryException
+   * Instantiates a new JCR local sharepoint drive.
+   *
+   * @param user the user
+   * @param driveNode the drive node
+   * @param sessionProviders the session providers
+   * @param finder the finder
+   * @param mimeTypes the mime types
+   * @param exoURL the exo URL
+   * @throws CloudDriveException the cloud drive exception
+   * @throws RepositoryException the repository exception
    */
   protected JCRLocalSharepointDrive(SharepointUser user,
                                     Node driveNode,
@@ -85,6 +101,18 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
     saveAccess(driveNode, api.getPassword(), api.getServiceURL(), api.getRepositoryId());
   }
 
+  /**
+   * Instantiates a new JCR local sharepoint drive.
+   *
+   * @param apiBuilder the api builder
+   * @param driveNode the drive node
+   * @param sessionProviders the session providers
+   * @param finder the finder
+   * @param mimeTypes the mime types
+   * @param exoURL the exo URL
+   * @throws RepositoryException the repository exception
+   * @throws CloudDriveException the cloud drive exception
+   */
   protected JCRLocalSharepointDrive(API apiBuilder,
                                     Node driveNode,
                                     SessionProviderService sessionProviders,
@@ -110,14 +138,13 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
 
   /**
    * Load user from the drive Node.
-   * 
+   *
    * @param apiBuilder {@link API} API builder
-   * @param provider {@link SharepointProvider}
    * @param driveNode {@link Node} root of the drive
    * @return {@link CMISUser}
-   * @throws RepositoryException
-   * @throws SharepointException
-   * @throws CloudDriveException
+   * @throws RepositoryException the repository exception
+   * @throws SharepointException the sharepoint exception
+   * @throws CloudDriveException the cloud drive exception
    */
   protected static SharepointUser loadUser(API apiBuilder, Node driveNode) throws RepositoryException,
                                                                            SharepointException,

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 eXo Platform SAS.
+ * Copyright (C) 2003-2016 eXo Platform SAS.
  *
  * This is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -57,7 +57,6 @@ public class SharepointUser extends CMISUser {
   /**
    * {@inheritDoc}
    * 
-   * @throws CloudDriveException
    */
   @Override
   public String createDriveTitle() throws RepositoryException, CloudDriveException {
@@ -105,8 +104,8 @@ public class SharepointUser extends CMISUser {
   /**
    * Currently connected SharePoint site name. Its name may be the same as {@link #getRepositoryName()} but
    * this name retrieved via native API.
-   * 
-   * @return
+   *
+   * @return the site title
    */
   public String getSiteTitle() {
     return api().getSiteTitle();
@@ -114,8 +113,8 @@ public class SharepointUser extends CMISUser {
 
   /**
    * An URl of currently connected SharePoint site. Retrieved via native API.
-   * 
-   * @return
+   *
+   * @return the site URL
    */
   public String getSiteURL() {
     return api().getSiteURL();
@@ -123,8 +122,8 @@ public class SharepointUser extends CMISUser {
 
   /**
    * Current user in SharePoint CMIS repository. Retrieved via native API.
-   * 
-   * @return
+   *
+   * @return the site user
    */
   public User getSiteUser() {
     return api().getSiteUser();
