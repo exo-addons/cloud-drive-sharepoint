@@ -34,8 +34,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <description>eXo Cloud Drive SharePoint connector</description>
 
   <scm>
-    <connection>https://github.com/exo-addons/cloud-drive-sharepoint/</connection>
-    <developerConnection>https://github.com/exo-addons/cloud-drive-sharepoint/</developerConnection>
+    <connection>scm:git:git://github.com:exo-addons/cloud-drive-sharepoint.git</connection>
+    <developerConnection>scm:git:git@github.com:exo-addons/cloud-drive-sharepoint.git</developerConnection>
+    <tag>HEAD</tag>
     <url>https://github.com/exo-addons/cloud-drive-sharepoint/</url>
   </scm>
 
