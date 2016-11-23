@@ -50,7 +50,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <org.exoplatform.platform.version>4.4.0-RC01</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
-    <org.exoplatform.exo-clouddrive.version>1.5.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
+    <org.exoplatform.exo-clouddrive.version>1.5.0</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
     <org.exoplatform.jcr-services.version>1.17.0-M11</org.exoplatform.jcr-services.version>
