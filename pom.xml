@@ -19,8 +19,7 @@ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.addons</groupId>
@@ -28,7 +27,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <version>7-RC01</version>
   </parent>
   <artifactId>exo-clouddrive-sharepoint</artifactId>
-  <version>1.5.x-SNAPSHOT</version>
+  <version>1.5.0</version>
   <packaging>pom</packaging>
   <name>eXo Cloud Drive :: Connectors :: SharePoint</name>
   <description>eXo Cloud Drive SharePoint connector</description>
@@ -36,7 +35,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <scm>
     <connection>scm:git:git://github.com:exo-addons/cloud-drive-sharepoint.git</connection>
     <developerConnection>scm:git:git@github.com:exo-addons/cloud-drive-sharepoint.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>1.5.0</tag>
     <url>https://github.com/exo-addons/cloud-drive-sharepoint/</url>
   </scm>
 
