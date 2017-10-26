@@ -25,7 +25,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <parent>
     <groupId>org.exoplatform.addons</groupId>
     <artifactId>addons-parent-pom</artifactId>
-    <version>5</version>
+    <version>6</version>
   </parent>
   <artifactId>exo-clouddrive-sharepoint</artifactId>
   <version>1.4.x-SNAPSHOT</version>
@@ -46,13 +46,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <maven.compiler.target>1.7</maven.compiler.target>
 
     <!-- eXo Modules -->
-    <org.exoplatform.platform.version>4.3.1-M07</org.exoplatform.platform.version>
+    <org.exoplatform.platform.version>4.3.1</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
     <org.exoplatform.exo-clouddrive.version>1.4.0</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
-    <org.exoplatform.jcr-services.version>1.16.7-M01</org.exoplatform.jcr-services.version>
+    <org.exoplatform.jcr-services.version>1.16.7</org.exoplatform.jcr-services.version>
     <test.groovy.version>2.0.8</test.groovy.version>
     <!-- spock.version>1.0-groovy-2.0-SNAPSHOT</spock.version -->
     <spock.version>0.7-groovy-2.0</spock.version>
