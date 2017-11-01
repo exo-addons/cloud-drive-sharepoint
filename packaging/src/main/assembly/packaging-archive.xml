@@ -30,7 +30,7 @@
      <dependencySet>
        <outputDirectory>webapps</outputDirectory>
        <includes>
-         <include>org.exoplatform.addons:exo-clouddrive-sharepoint-webapp:war</include>
+         <include>org.exoplatform.addons.clouddrive:exo-clouddrive-sharepoint-webapp:war</include>
        </includes>
        <outputFileNameMapping>cloud-drive-sharepoint.war</outputFileNameMapping>
        <scope>provided</scope>
@@ -41,7 +41,7 @@
        <outputDirectory>lib</outputDirectory>
        <useTransitiveDependencies>true</useTransitiveDependencies>
        <includes>
-         <include>org.exoplatform.addons:exo-clouddrive-sharepoint*:jar</include>
+         <include>org.exoplatform.addons.clouddrive:exo-clouddrive-sharepoint*:jar</include>
        </includes>
        <scope>provided</scope>
        <fileMode>0644</fileMode>

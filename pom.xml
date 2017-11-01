@@ -25,10 +25,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <parent>
     <groupId>org.exoplatform.addons</groupId>
     <artifactId>addons-parent-pom</artifactId>
-    <version>7</version>
+    <version>8-M01</version>
   </parent>
+  
+  <groupId>org.exoplatform.addons.clouddrive</groupId>
   <artifactId>exo-clouddrive-sharepoint</artifactId>
-  <version>1.5.x-SNAPSHOT</version>
+  <version>1.6.x-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>eXo Cloud Drive :: Connectors :: SharePoint</name>
   <description>eXo Cloud Drive SharePoint connector</description>
@@ -47,13 +49,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- eXo Modules -->
-    <org.exoplatform.platform.version>4.4.3</org.exoplatform.platform.version>
+    <org.exoplatform.platform.version>5.0.0-M27</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
-    <org.exoplatform.exo-clouddrive.version>1.5.0</org.exoplatform.exo-clouddrive.version>
+    <org.exoplatform.exo-clouddrive.version>1.6.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
-    <org.exoplatform.jcr-services.version>1.17.3</org.exoplatform.jcr-services.version>
     <test.groovy.version>2.4.7</test.groovy.version>
     <!-- spock.version>1.0-groovy-2.0-SNAPSHOT</spock.version -->
     <spock.version>1.0-groovy-2.4</spock.version>
@@ -82,25 +83,25 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       
       <!-- Cloud Drive extension -->
       <dependency>
-        <groupId>org.exoplatform.addons</groupId>
+        <groupId>org.exoplatform.addons.clouddrive</groupId>
         <artifactId>exo-clouddrive-services-core</artifactId>
         <version>${org.exoplatform.exo-clouddrive.version}</version>
         <type>jar</type>
       </dependency>
       <dependency>
-        <groupId>org.exoplatform.addons</groupId>
+        <groupId>org.exoplatform.addons.clouddrive</groupId>
         <artifactId>exo-clouddrive-services-ecms</artifactId>
         <version>${org.exoplatform.exo-clouddrive.version}</version>
         <type>jar</type>
       </dependency>
       <dependency>
-        <groupId>org.exoplatform.addons</groupId>
+        <groupId>org.exoplatform.addons.clouddrive</groupId>
         <artifactId>exo-clouddrive-cmis-services</artifactId>
         <version>${org.exoplatform.exo-clouddrive.version}</version>
         <type>jar</type>
       </dependency>
       <dependency>
-        <groupId>org.exoplatform.addons</groupId>
+        <groupId>org.exoplatform.addons.clouddrive</groupId>
         <artifactId>exo-clouddrive-cmis-webapp</artifactId>
         <version>${org.exoplatform.exo-clouddrive.version}</version>
         <type>war</type>
@@ -108,13 +109,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       
       <!-- eXo Cloud Drive SharePoint modules -->
       <dependency>
-        <groupId>org.exoplatform.addons</groupId>
+        <groupId>org.exoplatform.addons.clouddrive</groupId>
         <artifactId>exo-clouddrive-sharepoint-services</artifactId>
         <version>${project.version}</version>
         <type>jar</type>
       </dependency>
       <dependency>
-        <groupId>org.exoplatform.addons</groupId>
+        <groupId>org.exoplatform.addons.clouddrive</groupId>
         <artifactId>exo-clouddrive-sharepoint-webapp</artifactId>
         <version>${project.version}</version>
         <type>war</type>
@@ -123,8 +124,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <!-- for tests -->
       <dependency>
         <groupId>org.exoplatform</groupId>
-        <artifactId>exo-jcr-services</artifactId>
-        <version>${org.exoplatform.jcr-services.version}</version>
+        <artifactId>exo-services</artifactId>
+        <version>${org.exoplatform.platform.version}</version>
         <type>jar</type>
       	<scope>test</scope>
       </dependency>
