@@ -52,7 +52,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <org.exoplatform.platform.version>5.0.0-M27</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
-    <org.exoplatform.exo-clouddrive.version>1.6.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
+    <org.exoplatform.exo-clouddrive.version>1.6.0-M01</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
     <test.groovy.version>2.4.7</test.groovy.version>
