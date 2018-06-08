@@ -18,6 +18,13 @@
  */
 package org.exoplatform.clouddrive.sharepoint;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
 import org.exoplatform.clouddrive.CloudDriveException;
 import org.exoplatform.clouddrive.cmis.CMISUser;
 import org.exoplatform.clouddrive.cmis.JCRLocalCMISDrive;
@@ -26,16 +33,8 @@ import org.exoplatform.clouddrive.sharepoint.SharepointConnector.API;
 import org.exoplatform.clouddrive.utils.ExtendedMimeTypeResolver;
 import org.exoplatform.services.jcr.ext.app.SessionProviderService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-
 /**
  * Local drive for CMIS provider.<br>
- * 
  */
 public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
 
@@ -95,7 +94,8 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
                                     SessionProviderService sessionProviders,
                                     NodeFinder finder,
                                     ExtendedMimeTypeResolver mimeTypes,
-                                    String exoURL) throws CloudDriveException, RepositoryException {
+                                    String exoURL)
+      throws CloudDriveException, RepositoryException {
     super(user, driveNode, sessionProviders, finder, mimeTypes, exoURL);
     SharepointAPI api = user.api();
     saveAccess(driveNode, api.getPassword(), api.getServiceURL(), api.getRepositoryId());
@@ -118,7 +118,8 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
                                     SessionProviderService sessionProviders,
                                     NodeFinder finder,
                                     ExtendedMimeTypeResolver mimeTypes,
-                                    String exoURL) throws RepositoryException, CloudDriveException {
+                                    String exoURL)
+      throws RepositoryException, CloudDriveException {
     super(loadUser(apiBuilder, driveNode), driveNode, sessionProviders, finder, mimeTypes, exoURL);
   }
 
@@ -162,8 +163,8 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
   }
 
   /**
-   * Extract actual file ID without its version classifier in SP. If given file ID is <code>null</code> then
-   * it will be returned as is.
+   * Extract actual file ID without its version classifier in SP. If given file
+   * ID is <code>null</code> then it will be returned as is.
    * 
    * @param fileId String
    * @return String with file ID
@@ -172,7 +173,8 @@ public class JCRLocalSharepointDrive extends JCRLocalCMISDrive {
     if (fileId != null) {
       String[] fidParts = fileId.split("-");
       if (fidParts.length > 1) {
-        return fidParts[0]; // first part of ID like 65-512 (or 65-1024 and so on)
+        return fidParts[0]; // first part of ID like 65-512 (or 65-1024 and so
+                            // on)
       }
     }
     return fileId;

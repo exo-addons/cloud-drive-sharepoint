@@ -22,7 +22,6 @@ import org.exoplatform.clouddrive.cmis.CMISException;
 
 /**
  * Indicates a problem on provider side or communication problem.<br>
- * 
  */
 public class SharepointException extends CMISException {
 

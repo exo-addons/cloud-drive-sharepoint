@@ -21,15 +21,13 @@ package org.exoplatform.clouddrive.sharepoint;
 
 import org.exoplatform.clouddrive.cmis.WrongCMISProviderException;
 
-
 /**
- * Web (REST) service not found on the SharePoint server. Exception message should describe details of the problem.<br>
- * 
+ * Web (REST) service not found on the SharePoint server. Exception message
+ * should describe details of the problem.<br>
  * Created by The eXo Platform SAS
  * 
  * @author <a href="mailto:pnedonosko@exoplatform.com">Peter Nedonosko</a>
  * @version $Id: SharepointServiceNotFound.java 00000 Oct 31, 2014 pnedonosko $
- * 
  */
 public class SharepointServiceNotFound extends WrongCMISProviderException {
 
