@@ -18,6 +18,23 @@
  */
 package org.exoplatform.clouddrive.sharepoint;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.security.KeyStore;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.ws.rs.core.MediaType;
+
 import org.apache.chemistry.opencmis.client.api.ChangeEvent;
 import org.apache.chemistry.opencmis.client.api.ChangeEvents;
 import org.apache.chemistry.opencmis.client.api.CmisObject;
@@ -52,6 +69,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+
 import org.exoplatform.clouddrive.CloudDriveAccessException;
 import org.exoplatform.clouddrive.CloudDriveException;
 import org.exoplatform.clouddrive.cmis.CMISAPI;
@@ -64,26 +82,8 @@ import org.exoplatform.ws.frameworks.json.impl.JsonException;
 import org.exoplatform.ws.frameworks.json.impl.JsonParserImpl;
 import org.exoplatform.ws.frameworks.json.value.JsonValue;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.KeyStore;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-import javax.ws.rs.core.MediaType;
-
 /**
  * All calls to Sharepoint API here.
- * 
  */
 public class SharepointAPI extends CMISAPI {
 
@@ -120,18 +120,20 @@ public class SharepointAPI extends CMISAPI {
 
     /**
      * {@inheritDoc}
-     * 
      */
     @Override
     protected Iterator<ChangeEvent> nextChunk() throws CMISException, CloudDriveAccessException {
-      final ChangeToken startChangeToken = changeToken; // if it's firstRun then it is start token
+      final ChangeToken startChangeToken = changeToken; // if it's firstRun then
+                                                        // it is start token
 
       Iterator<ChangeEvent> nextChunk = super.nextChunk();
 
       if (!nextChunk.hasNext() && firstRun) {
         // if first run return empty changes:
-        // ensure that startChangeToken isn't of DELETED and thus not existing event in SP's Changes Log
-        // try changes with previous token in the full log (null) - this request can be long (as will read all
+        // ensure that startChangeToken isn't of DELETED and thus not existing
+        // event in SP's Changes Log
+        // try changes with previous token in the full log (null) - this request
+        // can be long (as will read all
         // available log).
         ChangeEvents allEvents = session(true).getContentChanges(null, true, Integer.MAX_VALUE);
         List<ChangeEvent> allChanges = allEvents.getChangeEvents();
@@ -295,7 +297,8 @@ public class SharepointAPI extends CMISAPI {
       schemeReg.register(new Scheme("https", 443, socketFactory));
 
       ThreadSafeClientConnManager connectionManager = new ThreadSafeClientConnManager(schemeReg);
-      // XXX 2 recommended by RFC 2616 sec 8.1.4, we make it bigger for quicker // upload
+      // XXX 2 recommended by RFC 2616 sec 8.1.4, we make it bigger for quicker
+      // // upload
       connectionManager.setDefaultMaxPerRoute(4);
       // 20 by default, we twice it also
       connectionManager.setMaxTotal(40);
@@ -634,7 +637,8 @@ public class SharepointAPI extends CMISAPI {
         }
         JsonValue json = readJson(resp);
         JsonValue dv = json.getElement("d");
-        if (dv != null && !dv.isNull()) {// TODO dv null and resp is 401 - run proper ex
+        if (dv != null && !dv.isNull()) {// TODO dv null and resp is 401 - run
+                                         // proper ex
           JsonValue tv = dv.getElement("Title");
           if (tv != null) {
             return tv.isNull() ? tv.toString() : tv.getStringValue();
@@ -745,14 +749,10 @@ public class SharepointAPI extends CMISAPI {
    * @throws IOException Signals that an I/O exception has occurred.
    * @throws SharepointException the sharepoint exception
    */
-  protected JsonValue readJson(HttpResponse resp) throws JsonException,
-                                                  IllegalStateException,
-                                                  IOException,
-                                                  SharepointException {
+  protected JsonValue readJson(HttpResponse resp) throws JsonException, IllegalStateException, IOException, SharepointException {
     HttpEntity entity = resp.getEntity();
     Header contentType = entity.getContentType();
-    if (contentType != null && contentType.getValue() != null
-        && contentType.getValue().startsWith(MediaType.APPLICATION_JSON)) {
+    if (contentType != null && contentType.getValue() != null && contentType.getValue().startsWith(MediaType.APPLICATION_JSON)) {
       InputStream content = entity.getContent();
       JsonParser jsonParser = new JsonParserImpl();
       JsonDefaultHandler handler = new JsonDefaultHandler();
@@ -833,9 +833,11 @@ public class SharepointAPI extends CMISAPI {
    * {@inheritDoc}
    */
   protected CmisObject rename(String newName, CmisObject obj, Session session) {
-    // XXX With SP we cannot just rename using existing object instance as the server will return
+    // XXX With SP we cannot just rename using existing object instance as the
+    // server will return
     // updateConflict telling it's not current object.
-    // This is probably due to the change token in existing object. Thus we create a new object instance and
+    // This is probably due to the change token in existing object. Thus we
+    // create a new object instance and
     // try rename via it.
 
     // Other ways to try:
@@ -854,7 +856,8 @@ public class SharepointAPI extends CMISAPI {
     // PropertyData<?> pdata;
     // if (PropertyIds.OBJECT_TYPE_ID.equals(prop.getId())) {
     // Property<String> objTypeId = obj.getProperty(PropertyIds.OBJECT_TYPE_ID);
-    // pdata = new PropertyIdImpl(PropertyIds.OBJECT_TYPE_ID, objTypeId.getValues());
+    // pdata = new PropertyIdImpl(PropertyIds.OBJECT_TYPE_ID,
+    // objTypeId.getValues());
     // } else {
     // @SuppressWarnings("unchecked")
     // // XXX nasty cast

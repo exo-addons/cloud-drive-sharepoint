@@ -18,7 +18,11 @@
  */
 package org.exoplatform.clouddrive.sharepoint;
 
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
 import org.apache.chemistry.opencmis.commons.data.RepositoryInfo;
+
 import org.exoplatform.clouddrive.CloudDrive;
 import org.exoplatform.clouddrive.CloudDriveException;
 import org.exoplatform.clouddrive.CloudDriveService;
@@ -41,17 +45,12 @@ import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.app.SessionProviderService;
 
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
-
 /**
  * Sharepoint Connector.<br>
- * 
  * Created by The eXo Platform SAS
  * 
  * @author <a href="mailto:pnedonosko@exoplatform.com">Peter Nedonosko</a>
  * @version $Id: SharepointConnector.java 00000 Aug 30, 2013 pnedonosko $
- * 
  */
 public class SharepointConnector extends CMISConnector implements CMISConnectorImpl {
 
@@ -89,7 +88,8 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
      * Build API.
      * 
      * @return {@link SharepointAPI}
-     * @throws CMISException if error happen during communication with SharePoint services
+     * @throws CMISException if error happen during communication with
+     *           SharePoint services
      * @throws CloudDriveException if cannot load local tokens
      */
     protected SharepointAPI build() throws CMISException, CloudDriveException {
@@ -127,7 +127,8 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
                              NodeFinder finder,
                              ExtendedMimeTypeResolver mimeTypes,
                              InitParams params,
-                             CodeAuthentication codeAuth) throws ConfigurationException {
+                             CodeAuthentication codeAuth)
+      throws ConfigurationException {
     super(jcrService, sessionProviders, finder, mimeTypes, params, codeAuth);
   }
 
@@ -168,7 +169,8 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
     SharepointAPI spAPI = createAPI(userId);
     User user = spAPI.getSiteUser();
     return new SharepointUser(user.getId(), // id
-                              spAPI.getUser(), // username used to connect the service
+                              spAPI.getUser(), // username used to connect the
+                                               // service
                               user.getEmail(), // email
                               provider,
                               spAPI);
@@ -178,16 +180,10 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
    * {@inheritDoc}
    */
   @Override
-  protected CloudDrive createDrive(CloudUser user, Node driveNode) throws CloudDriveException,
-                                                                  RepositoryException {
+  protected CloudDrive createDrive(CloudUser user, Node driveNode) throws CloudDriveException, RepositoryException {
     if (user instanceof SharepointUser) {
       SharepointUser apiUser = (SharepointUser) user;
-      JCRLocalCMISDrive drive = new JCRLocalSharepointDrive(apiUser,
-                                                            driveNode,
-                                                            sessionProviders,
-                                                            jcrFinder,
-                                                            mimeTypes,
-                                                            exoURL());
+      JCRLocalCMISDrive drive = new JCRLocalSharepointDrive(apiUser, driveNode, sessionProviders, jcrFinder, mimeTypes, exoURL());
       return drive;
     } else {
       throw new CloudDriveException("Not SharePoint user: " + user);
@@ -198,9 +194,7 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
    * {@inheritDoc}
    */
   @Override
-  protected CloudDrive loadDrive(Node driveNode) throws DriveRemovedException,
-                                                CloudDriveException,
-                                                RepositoryException {
+  protected CloudDrive loadDrive(Node driveNode) throws DriveRemovedException, CloudDriveException, RepositoryException {
     JCRLocalSharepointDrive.checkNotTrashed(driveNode);
     JCRLocalSharepointDrive.migrateName(driveNode);
     JCRLocalSharepointDrive drive = new JCRLocalSharepointDrive(new API(),
@@ -220,10 +214,11 @@ public class SharepointConnector extends CMISConnector implements CMISConnectorI
     CloudDriveService cdService = (CloudDriveService) ExoContainerContext.getCurrentContainer()
                                                                          .getComponentInstanceOfType(CloudDriveService.class);
     try {
-      return cdService.getProvider(SP_AUTHPROVIDERID).getId(); // CMIS provider id hardcoded
+      return cdService.getProvider(SP_AUTHPROVIDERID).getId(); // CMIS provider
+                                                               // id hardcoded
     } catch (ProviderNotAvailableException e) {
-      throw new ConfigurationException("Cannot initialize " + SP_PRODUCTNAME + " connector: "
-          + SP_AUTHPROVIDERID + " provider not registered but required", e);
+      throw new ConfigurationException("Cannot initialize " + SP_PRODUCTNAME + " connector: " + SP_AUTHPROVIDERID
+          + " provider not registered but required", e);
     }
   }
 }

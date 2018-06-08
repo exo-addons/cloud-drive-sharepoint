@@ -25,12 +25,11 @@ import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event;
 
 /**
- * Sharepoint UI component for a menu action dedicated to a single provider. Its UI configuration will refer
- * the action by "ConnectSharepoint" key (see in webapp config), rename it for an actual name (e.g. based on
- * provider ID).
+ * Sharepoint UI component for a menu action dedicated to a single provider. Its
+ * UI configuration will refer the action by "ConnectSharepoint" key (see in
+ * webapp config), rename it for an actual name (e.g. based on provider ID).
  */
-@ComponentConfig(events = {
-    @EventConfig(listeners = ConnectSharepointActionComponent.ConnectSharepointActionListener.class) })
+@ComponentConfig(events = { @EventConfig(listeners = ConnectSharepointActionComponent.ConnectSharepointActionListener.class) })
 public class ConnectSharepointActionComponent extends BaseConnectActionComponent {
 
   /**
@@ -39,14 +38,13 @@ public class ConnectSharepointActionComponent extends BaseConnectActionComponent
   protected static final String PROVIDER_ID = "sharepoint";
 
   /**
-   * The listener interface for receiving connectSharepointAction events.
-   * The class that is interested in processing a connectSharepointAction
-   * event implements this interface, and the object created
-   * with that class is registered with a component using the
-   * component's <code>addConnectSharepointActionListener</code> method. When
-   * the connectSharepointAction event occurs, that object's appropriate
-   * method is invoked.
-   *
+   * The listener interface for receiving connectSharepointAction events. The
+   * class that is interested in processing a connectSharepointAction event
+   * implements this interface, and the object created with that class is
+   * registered with a component using the component's
+   * <code>addConnectSharepointActionListener</code> method. When the
+   * connectSharepointAction event occurs, that object's appropriate method is
+   * invoked.
    */
   public static class ConnectSharepointActionListener extends UIActionBarActionListener<ConnectSharepointActionComponent> {
 

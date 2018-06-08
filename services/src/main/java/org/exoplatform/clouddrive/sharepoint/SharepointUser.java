@@ -18,17 +18,16 @@
  */
 package org.exoplatform.clouddrive.sharepoint;
 
+import javax.jcr.RepositoryException;
+
 import org.exoplatform.clouddrive.CloudDriveException;
 import org.exoplatform.clouddrive.CloudProvider;
 import org.exoplatform.clouddrive.cmis.CMISAPI;
 import org.exoplatform.clouddrive.cmis.CMISUser;
 import org.exoplatform.clouddrive.sharepoint.SharepointAPI.User;
 
-import javax.jcr.RepositoryException;
-
 /**
  * Sharepoint user.
- * 
  */
 public class SharepointUser extends CMISUser {
 
@@ -56,7 +55,6 @@ public class SharepointUser extends CMISUser {
 
   /**
    * {@inheritDoc}
-   * 
    */
   @Override
   public String createDriveTitle() throws RepositoryException, CloudDriveException {
@@ -102,8 +100,8 @@ public class SharepointUser extends CMISUser {
   // ***** specifics ******
 
   /**
-   * Currently connected SharePoint site name. Its name may be the same as {@link #getRepositoryName()} but
-   * this name retrieved via native API.
+   * Currently connected SharePoint site name. Its name may be the same as
+   * {@link #getRepositoryName()} but this name retrieved via native API.
    *
    * @return the site title
    */
