@@ -5,6 +5,7 @@
 	height: 14px !important;
 	width: 14px !important;
 }
+
 .uiIconEcmsConnectSharepoint:before {
 	content: url("icons/sharepoint2013-gray-14x14.png");
 }
@@ -16,7 +17,7 @@
 	content: url("icons/sharepoint2013-gray-24x24.png");
 	/* Fix image pos to be more centered*/
 	position: relative;
-  	left: 2px;
+	left: 2px;
 }
 
 /*
@@ -25,6 +26,7 @@
 .uiIcon16x16CloudFile-sharepoint {
 	top: 3px;
 }
+
 .uiIcon16x16CloudFile-sharepoint:before {
 	content: url("icons/sharepoint2013-gray-14x14.png");
 }
@@ -51,7 +53,7 @@
  */
 .uiIcon24x24CloudDrive-sharepoint:before {
 	left: 3px;
-    top: -21px;
+	top: -21px;
 	width: 20px;
 	height: 20px;
 	position: relative !important;
@@ -79,19 +81,17 @@
 /*
  * Responsive styles
  */
-@media (min-width: 481px) and (max-width: 1024px) {
+@media ( min-width : 481px) and (max-width: 1024px) {
 	.uiIcon16x16CloudDrive-sharepoint:before {
 		left: -17px;
 		top: 2px;
 	}
-	
 	.uiIcon24x24CloudDrive-sharepoint:before {
 		left: 6px;
-    	top: -30px;
+		top: -30px;
 	}
-	
 	.uiIcon64x64CloudDrive-sharepoint:before {
 		left: -57px;
-    	top: -8px;
+		top: -8px;
 	}
 }
