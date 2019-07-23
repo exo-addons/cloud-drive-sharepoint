@@ -30,7 +30,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   
   <groupId>org.exoplatform.addons.clouddrive</groupId>
   <artifactId>exo-clouddrive-sharepoint</artifactId>
-  <version>1.7.x-SNAPSHOT</version>
+  <version>1.8.x-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>eXo Cloud Drive :: Connectors :: SharePoint</name>
   <description>eXo Cloud Drive SharePoint connector</description>
@@ -49,10 +49,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- eXo Modules -->
-    <org.exoplatform.platform.version>5.1.0</org.exoplatform.platform.version>
+    <org.exoplatform.platform.version>5.2.0</org.exoplatform.platform.version>
 
     <!-- eXo Cloud Drive & CMIS connector -->
-    <org.exoplatform.exo-clouddrive.version>1.7.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
+    <org.exoplatform.exo-clouddrive.version>1.8.x-SNAPSHOT</org.exoplatform.exo-clouddrive.version>
 
     <!-- for tests -->
     <test.groovy.version>2.4.7</test.groovy.version>
